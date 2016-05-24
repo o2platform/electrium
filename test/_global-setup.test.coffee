@@ -3,7 +3,7 @@ assert      = require('assert')
 Global_Setup = require('../src/global-setup')
 
 
-describe 'Global_Setup', ->
+describe.only 'Global_Setup', ->
 
   it 'constructor', ->
     using new Global_Setup(), ->
