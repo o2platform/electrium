@@ -1,7 +1,5 @@
 Spectron_API = require '../../src/Spectron-API'
 
-return
-
 wait = ()->
   new Promise (resolve)=>
     1000.wait ->
@@ -25,14 +23,14 @@ describe 'Spectron-API tests',->
     console.log '....will go here'
   # this is not working as expected
   
-  xit 'open (BBC news)', ->
+  it 'open (BBC news)', ->
     url = 'http://news.bbc.co.uk'
     using spectron.show(), ->
       @.open(url).then =>
         @.window().getURL().then (url)=>
             url.assert_Is url
 
-  xit 'start window manually', ->
+  it 'start window manually', ->
     spectron.setup()
     using spectron, ->
       @.start()
