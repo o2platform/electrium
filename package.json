@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/o2platform/electrium/issues"
   },
-  "homepage": "https://github.com/o2platform/electrium#readme"
+  "homepage": "https://github.com/o2platform/electrium#readme",
+  "dependencies": {
+    "electron-chromedriver": "^1.1.0",
+    "electron-prebuilt": "^1.1.1",
+    "fluentnode": "^0.6.1",
+    "mocha": "^2.5.1",
+    "nesh": "^1.6.0",
+    "spectron": "^3.1.0"
+  }
 }
