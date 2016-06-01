@@ -1,6 +1,6 @@
 Spectron_API = require '../src/Spectron-API'
 
-describe.only 'Spectron-API',->
+describe 'Spectron-API',->
 
   spectron = null;
 
