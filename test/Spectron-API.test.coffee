@@ -9,14 +9,14 @@ describe 'Spectron-API',->
   before ()->
     spectron = new Spectron_API().setup()
     spectron.start()
-      .then ->
+      #.then ->
         #console.log 'start ok'
       .catch (err)->
         console.log 'start error: ' + err
 
   after ->
     spectron.stop()
-      .then ->
+      #.then ->
         #console.log 'stop ok'
       .catch (err)->
         console.log 'stop error: ' + err
