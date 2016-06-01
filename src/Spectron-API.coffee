@@ -19,8 +19,8 @@ class Spectron_API
     @
 
   open: (url)=>
-    @.window().loadURL(url)
-    @.client().waitUntilWindowLoaded()      
+    @.window().loadURL(url).then =>
+      @.client().waitUntilWindowLoaded()
 
   setup: =>
     @.options.path  = @.root_Path.path_Combine 'node_modules/.bin/electron'
