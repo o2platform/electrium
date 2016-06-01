@@ -60,20 +60,14 @@ describe 'test browserwindow and client', ->
     global_Setup.stopApplication()
 
   it 'gets window count', ()->
-    console.log global_Setup.app.browserWindow
-    console.log global_Setup.app.client.getWindowCount
     global_Setup.isRunning().assert_Is_True()
     global_Setup.app.client.getWindowCount()
       .then (count) ->
-        count.assert_Is 1
+        count.assert_Is 2
 
   it 'show an initial window', ()->
-    console.log 'here'
     log global_Setup.app.client
-    #console.log global_Setup.app
-    return
     using global_Setup.app.browserWindow, ->
-      #console.log @
       @.setBackgroundColor('#001122')
       @.setPosition(400,10)
       @.setSize(600,400)

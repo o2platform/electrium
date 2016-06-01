@@ -11,7 +11,7 @@ app.on('ready', function () {
     width     : 400,
     height    : 400,
     webPreferences: {
-      nodeIntegration: false }
+      nodeIntegration: true }
   })
   mainWindow.loadURL('file://' + __dirname + '/index.html')
   mainWindow.on('closed', function () { mainWindow = null })
