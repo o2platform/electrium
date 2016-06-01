@@ -1,19 +1,13 @@
 Spectron_API = require '../src/Spectron-API'
 
-describe 'Spectron-API',->
+describe.only 'Spectron-API',->
 
   spectron = null;
 
   @.timeout 4000
 
   before ->
-    #Application = require('spectron').Application
-    #app = new Application()
-    #console.log  app.start() instanceof Promise
-    #return
     spectron = new Spectron_API().setup()
-    #console.log spectron.app.start() instanceof Promise
-    #return
     spectron.start()
       .then ->
         console.log 'start ok'
@@ -21,9 +15,8 @@ describe 'Spectron-API',->
         console.log 'start error: ' + err
 
   after ->
-    return
     spectron.stop()
-      .when ->
+      .then ->
         console.log 'stop ok'
       .catch (err)->
         console.log 'stop error: ' + err
@@ -37,7 +30,7 @@ describe 'Spectron-API',->
       @.root_Path  .assert_Folder_Exists()
                    .path_Combine('node_modules').assert_Folder_Exists()
       assert_Is_Null @.app
-  return
+
 
   it 'isRunning', ->
     using spectron, ->
@@ -94,28 +87,30 @@ describe 'Spectron-API',->
       @.window().getURL.assert_Is_Function()
 
   # other tests
-  describe 'other tests', ->
-    it 'expected files inside electron-apps/web-view folder', ->
-      using new Spectron_API().setup(), ->
-        app_Folder = @.options.args.first()
-        app_Folder.assert_Folder_Exists().assert_Contains '/electron-apps/about-blank'
-                  .files().file_Names()  .assert_Contains [ 'main.js', 'package.json']
+describe 'Spectron-API | other tests', ->
+  it 'expected files inside electron-apps/web-view folder', ->
+    using new Spectron_API().setup(), ->
+      app_Folder = @.options.args.first()
+      app_Folder.assert_Folder_Exists().assert_Contains '/electron-apps/node-about-blank'
+                .files().file_Names()  .assert_Contains [ 'main.js', 'package.json']
 
-    it 'check title and html', ->
-      webview = [ __dirname.path_Combine '../electron-apps/web-view' ]
-      using new Spectron_API(), ->
-        @.options.args = webview
-        @.setup().start().then =>                                     # create chrome and start with web-view electron app
-          @.app.client.getTitle().then (title)=>                      # get title of host window
-            title.assert_Is 'Electron App - with WebView'
+  it 'check title and html', (done)->
+    @.timeout 3000
+    webview = [ __dirname.path_Combine '../electron-apps/web-view' ]
+    using new Spectron_API(), ->
+      @.options.args = webview
+      @.setup().start().then =>                                     # create chrome and start with web-view electron app
+        @.app.client.getTitle().then (title)=>                      # get title of host window
+          title.assert_Is 'Electron App - with WebView'
 
-            @.app.client.getHTML('*').then (html)=>
-              html.first().assert_Contains('<webview id="google" ')   # confirm we are in the electron window
+          @.app.client.getHTML('*').then (html)=>
+            html.first().assert_Contains('<webview id="google" ')   # confirm we are in the electron window
 
-              @.app.client.windowByIndex(1).then =>
-                @.app.client.getHTML('*').then (html)=>
-                  html.first().assert_Contains('Google')              # get html of webv-iew
-                  @.stop()
+            @.app.client.windowByIndex(1).then =>
+              @.app.client.getHTML('*').then (html)=>
+                html.first().assert_Contains('Google')              # get html of webv-iew
+                @.stop().then ->
+                  done()
 
 
 

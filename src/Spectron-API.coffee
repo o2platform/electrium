@@ -31,7 +31,6 @@ class Spectron_API
     new @.Application(@.options)
           .start()
           .then (app)=>
-            console.log 'here after start'
             @.app = app
 
   stop: => 

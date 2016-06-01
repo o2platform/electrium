@@ -40,49 +40,49 @@ describe 'Global_Setup', ->
         @.stopApplication().then =>
           @.stopApplication() 
 
-describe 'test browserwindow and client', ->
+  describe 'Global_Setup | test browserwindow and client', ->
 
-  global_Setup   = null
+    global_Setup   = null
 
-  @.timeout 10000
+    @.timeout 10000
 
-  beforeEach () ->
-    global_Setup = new Global_Setup()
-    global_Setup.startApplication()
-      .then ->
-        #console.log 'started ok'
-        global_Setup.app.client
-      .catch (err)->
-        console.log 'start error: ' + err
+    beforeEach () ->
+      global_Setup = new Global_Setup()
+      global_Setup.startApplication()
+        .then ->
+          #console.log 'started ok'
+          global_Setup.app.client
+        .catch (err)->
+          console.log 'start error: ' + err
 
-  afterEach ()->
-    global_Setup.stopApplication()
+    afterEach ()->
+      global_Setup.stopApplication()
 
-  it 'gets window count', ()->
-    global_Setup.isRunning().assert_Is_True()
-    global_Setup.app.client.getWindowCount()
-      .then (count) ->
-        count.assert_Is 2
+    it 'gets window count', ()->
+      global_Setup.isRunning().assert_Is_True()
+      global_Setup.app.client.getWindowCount()
+        .then (count) ->
+          count.assert_Is 2
 
-  it 'show an initial window', ()->
-    global_Setup.app.client
-    using global_Setup.app.browserWindow, ->
-      @.setBackgroundColor('#001122')
-      @.setPosition(400,10)
-      @.setSize(600,400)
-      @.showInactive()
+    it 'show an initial window', ()->
+      global_Setup.app.client
+      using global_Setup.app.browserWindow, ->
+        @.setBackgroundColor('#001122')
+        @.setPosition(400,10)
+        @.setSize(600,400)
+        @.showInactive()
 
-  it 'check title', ()->
-    global_Setup.app.client.windowByIndex(1)
-      .then -> global_Setup.app.client.getTitle()
-      .then (title)->
-        title.assert_Is 'Google'
+    it 'check title', ()->
+      global_Setup.app.client.windowByIndex(1)
+        .then -> global_Setup.app.client.getTitle()
+        .then (title)->
+          title.assert_Is 'Google'
 
-  it 'check HTML', ()->
-    global_Setup.app.client.windowByIndex(1)
-      .then -> global_Setup.app.client.getHTML('*')
-      .then (text)->
-        text[0].assert_Contains 'Google'
+    it 'check HTML', ()->
+      global_Setup.app.client.windowByIndex(1)
+        .then -> global_Setup.app.client.getHTML('*')
+        .then (text)->
+          text[0].assert_Contains 'Google'
 
 
 
