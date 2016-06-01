@@ -1,6 +1,6 @@
 Spectron_API = require '../src/Spectron-API'
 
-describe 'Spectron-API',->
+describe.only 'Spectron-API',->
 
   spectron = null;
 
@@ -40,9 +40,9 @@ describe 'Spectron-API',->
     url = 'http://news.bbc.co.uk'
     using spectron.show(), ->
       @.open url
-      .then =>
-        @.window().getURL().then (url)=>
-          url.assert_Is url
+        .then =>
+          @.window().getURL().then (url)=>
+            url.assert_Is url
 
   it 'setup', ()->
     using spectron.app, ->
