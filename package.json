@@ -1,6 +1,6 @@
 {
   "name": "electrium",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Browser automation based on Electron (similar to Selenium) ",
   "main": "index.js",
   "scripts": {
