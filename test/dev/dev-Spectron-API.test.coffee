@@ -6,7 +6,7 @@ Number::wait = (callback)->
       resolve()
       callback() if callback
 
-describe.only 'Dev Spectron API tests',->
+describe 'Dev Spectron API tests',->
 
   @.timeout 8000
 
