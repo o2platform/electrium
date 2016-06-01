@@ -19,16 +19,20 @@ class Spectron_API
 
   setup: =>
     @.options.path  = @.root_Path.path_Combine 'node_modules/.bin/electron'
-    @.options.args ?= [ __dirname.path_Combine '../electron-apps/about-blank' ]
-    @.app           = new @.Application @.options
+    @.options.args ?= [ __dirname.path_Combine '../electron-apps/node-about-blank' ]
     @
 
   show: =>
-    @.window().showInactive()
+    if @.window()
+      @.window().showInactive()
     @
     
   start: =>
-    @.app.start()
+    new @.Application(@.options)
+          .start()
+          .then (app)=>
+            console.log 'here after start'
+            @.app = app
 
   stop: => 
     @.app.stop()

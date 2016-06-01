@@ -6,7 +6,8 @@ module.exports = function ( ) {
         ],
 
         tests: [
-            'test/dev/**/*.coffee'
+            //'test/dev/**/*.coffee'
+            'test/Spectron-API.test.coffee'
         ],
 
         testFramework: 'mocha',

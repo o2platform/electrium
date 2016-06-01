@@ -6,13 +6,16 @@ class Global_Setup
   constructor: (options)->
     @.options   = options || {}
     @.app       = null
-    @.root_Path = wallaby?.localProjectDir || __dirname.path_Combine '../'
+    #@.root_Path = wallaby?.localProjectDir || __dirname.path_Combine '../'
     @.app_Path  = __dirname.path_Combine '../electron-apps/web-view'
     @.options.path = @.getElectronPath()
     @.options.args = [@.app_Path]
     
   getElectronPath: =>
-    @.root_Path.path_Combine 'node_modules/.bin/electron'
+    #@.root_Path.path_Combine 'node_modules/.bin/electron'
+    path = require 'electron-prebuilt'
+    console.log path
+    return path
 
   isRunning: =>
     @.app?.isRunning() || false

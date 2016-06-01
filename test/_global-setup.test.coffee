@@ -3,7 +3,7 @@ assert      = require('assert')
 Global_Setup = require('../src/global-setup')
 
 
-describe.only 'Global_Setup', ->
+describe 'Global_Setup', ->
 
   it 'constructor', ->
     using new Global_Setup(), ->
@@ -26,7 +26,9 @@ describe.only 'Global_Setup', ->
     @.timeout 5000
     using new Global_Setup(), ->
       @.startApplication().then =>
+        #@.app.browserWindow.show()
         @.isRunning().assert_Is_True()
+        console.log @.app
         @.app.client.getTitle().then (title)=>
           title.assert_Is 'Electron App - with WebView'
           @.stopApplication().then =>
@@ -48,18 +50,30 @@ describe 'test browserwindow and client', ->
   beforeEach () ->
     global_Setup = new Global_Setup()
     global_Setup.startApplication()
+      .then ->
+        console.log 'started ok'
+        console.log global_Setup.app.client
+      .catch (err)->
+        console.log 'start error: ' + err
 
   afterEach ()->
     global_Setup.stopApplication()
 
   it 'gets window count', ()->
+    console.log global_Setup.app.browserWindow
+    console.log global_Setup.app.client.getWindowCount
     global_Setup.isRunning().assert_Is_True()
     global_Setup.app.client.getWindowCount()
       .then (count) ->
-        count.assert_Is 2
+        count.assert_Is 1
 
   it 'show an initial window', ()->
+    console.log 'here'
+    log global_Setup.app.client
+    #console.log global_Setup.app
+    return
     using global_Setup.app.browserWindow, ->
+      #console.log @
       @.setBackgroundColor('#001122')
       @.setPosition(400,10)
       @.setSize(600,400)

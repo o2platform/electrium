@@ -3,8 +3,6 @@ var BrowserWindow = require('electron').BrowserWindow
 
 var mainWindow = null
 
-// note: when node integration is set to false the app.browserWindow object will not be available
-
 app.on('ready', function () {
     mainWindow = new BrowserWindow({
         show      : false,
@@ -15,7 +13,7 @@ app.on('ready', function () {
         width     : 500,
         height    : 400,
         webPreferences: {
-            nodeIntegration: false }
+            nodeIntegration: true }
     })
     mainWindow.loadURL('about:blank')
 

@@ -7,11 +7,26 @@ describe 'Spectron-API',->
   @.timeout 4000
 
   before ->
+    #Application = require('spectron').Application
+    #app = new Application()
+    #console.log  app.start() instanceof Promise
+    #return
     spectron = new Spectron_API().setup()
+    #console.log spectron.app.start() instanceof Promise
+    #return
     spectron.start()
+      .then ->
+        console.log 'start ok'
+      .catch (err)->
+        console.log 'start error: ' + err
 
   after ->
+    return
     spectron.stop()
+      .when ->
+        console.log 'stop ok'
+      .catch (err)->
+        console.log 'stop error: ' + err
 
 
 
@@ -22,6 +37,7 @@ describe 'Spectron-API',->
       @.root_Path  .assert_Folder_Exists()
                    .path_Combine('node_modules').assert_Folder_Exists()
       assert_Is_Null @.app
+  return
 
   it 'isRunning', ->
     using spectron, ->

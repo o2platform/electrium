@@ -10,6 +10,8 @@ app.on('ready', function () {
     //y         : -1500,
     width     : 400,
     height    : 400,
+    webPreferences: {
+      nodeIntegration: false }
   })
   mainWindow.loadURL('file://' + __dirname + '/index.html')
   mainWindow.on('closed', function () { mainWindow = null })
