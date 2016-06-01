@@ -36,7 +36,10 @@ describe 'Spectron-API',->
     using spectron, ->
       @.is_Running().assert_Is_True()
 
-  it 'open (BBC news)', ->
+  # this tests fails when executed together with all other tests
+  # it passes when executed directly or with all tests inside the current describe
+  # see https://github.com/o2platform/electrium/issues/3
+  xit 'open (BBC news)', ->
     url = 'http://news.bbc.co.uk'
     using spectron.show(), ->
       @.open url
