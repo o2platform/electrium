@@ -14,7 +14,6 @@ class Global_Setup
   getElectronPath: =>
     #@.root_Path.path_Combine 'node_modules/.bin/electron'
     path = require 'electron-prebuilt'
-    console.log path
     return path
 
   isRunning: =>

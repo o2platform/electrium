@@ -28,7 +28,6 @@ describe 'Global_Setup', ->
       @.startApplication().then =>
         #@.app.browserWindow.show()
         @.isRunning().assert_Is_True()
-        console.log @.app
         @.app.client.getTitle().then (title)=>
           title.assert_Is 'Electron App - with WebView'
           @.stopApplication().then =>
@@ -51,8 +50,8 @@ describe 'test browserwindow and client', ->
     global_Setup = new Global_Setup()
     global_Setup.startApplication()
       .then ->
-        console.log 'started ok'
-        console.log global_Setup.app.client
+        #console.log 'started ok'
+        global_Setup.app.client
       .catch (err)->
         console.log 'start error: ' + err
 
@@ -66,7 +65,7 @@ describe 'test browserwindow and client', ->
         count.assert_Is 2
 
   it 'show an initial window', ()->
-    log global_Setup.app.client
+    global_Setup.app.client
     using global_Setup.app.browserWindow, ->
       @.setBackgroundColor('#001122')
       @.setPosition(400,10)
