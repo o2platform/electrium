@@ -1,12 +1,12 @@
 Spectron_API = require '../src/Spectron-API'
 
-describe.only 'Spectron-API',->
+describe 'Spectron-API',->
 
   spectron = null;
 
   @.timeout 4000
 
-  before ->
+  before ()->
     spectron = new Spectron_API().setup()
     spectron.start()
       .then ->
@@ -44,31 +44,30 @@ describe.only 'Spectron-API',->
         @.window().getURL().then (url)=>
           url.assert_Is url
 
-  it 'setup', ->
-    using new Spectron_API(), ->
-      @.setup().assert_Is @
-      using @.app, ->
-        @.host                .assert_Is '127.0.0.1'
-        @.port                .assert_Is 9515
-        @.quitTimeout         .assert_Is 1000
-        @.startTimeout        .assert_Is 5000
-        @.waitTimeout         .assert_Is 5000
-        @.connectionRetryCount.assert_Is 10
-        @.nodePath            .assert_Is process.execPath
-        @.env                 .assert_Is {}
-        @.workingDirectory    .assert_Is __dirname.path_Combine('..')
-        @.api.app             .assert_Is @
-        @.api.requireName     .assert_Is 'require'
-        @.transferPromiseness .assert_Is_Function()
+  it 'setup', ()->
+    using spectron.app, ->
+      @.host                .assert_Is '127.0.0.1'
+      @.port                .assert_Is 9515
+      @.quitTimeout         .assert_Is 1000
+      @.startTimeout        .assert_Is 5000
+      @.waitTimeout         .assert_Is 5000
+      @.connectionRetryCount.assert_Is 10
+      @.nodePath            .assert_Is process.execPath
+      @.env                 .assert_Is {}
+      @.workingDirectory    .assert_Is __dirname.path_Combine('..')
+      @.api.app             .assert_Is @
+      @.api.requireName     .assert_Is 'require'
+      @.transferPromiseness .assert_Is_Function()
 
-        @.path.assert_File_Exists()
-              .assert_Contains '.bin/electron'
-        @.args.assert_Size_Is(1).first()
-              .assert_Folder_Exists()
-              .assert_Contains 'electron-apps/about-blank'
+      @.path.assert_File_Exists()
+            .assert_Contains '.bin/electron'
+      @.args.assert_Size_Is(1).first()
+            .assert_Folder_Exists()
+            .assert_Contains 'electron-apps/node-about-blank'
 
-  it 'show', ->
+  it 'show, hide', ->
     using spectron,->
+      @.hide()
       @.window().isVisible().then (value)=>
         value.assert_Is_False()
         @.show()
@@ -88,6 +87,8 @@ describe.only 'Spectron-API',->
 
   # other tests
 describe 'Spectron-API | other tests', ->
+  @.timeout 5000
+
   it 'expected files inside electron-apps/web-view folder', ->
     using new Spectron_API().setup(), ->
       app_Folder = @.options.args.first()
@@ -95,7 +96,6 @@ describe 'Spectron-API | other tests', ->
                 .files().file_Names()  .assert_Contains [ 'main.js', 'package.json']
 
   it 'check title and html', (done)->
-    @.timeout 3000
     webview = [ __dirname.path_Combine '../electron-apps/web-view' ]
     using new Spectron_API(), ->
       @.options.args = webview

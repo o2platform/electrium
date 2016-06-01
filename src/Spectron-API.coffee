@@ -13,6 +13,11 @@ class Spectron_API
   is_Running: =>
     @.app?.isRunning() || false
 
+  hide: =>
+    if @.window()
+      @.window().hide()
+    @
+
   open: (url)=>
     @.window().loadURL(url)
     @.client().waitUntilWindowLoaded()      
