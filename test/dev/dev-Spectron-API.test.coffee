@@ -28,14 +28,11 @@ describe 'Dev Spectron API tests',->
           url.assert_Is url
 
   it 'open Google', ->
-    #spectron.setup()
     using spectron, ->
-      #@.start()
-        #.then =>
-          @.window().showInactive()
-          @.window().loadURL('http://www.google.com')
-          @.client().waitUntilWindowLoaded().then =>
-            @.client().getTitle().then (title)=>
-              title.assert_Is ''
-              @.client().getHTML('*').then (html)=>
-                html[0].assert_Contains 'Google'
+      @.window().showInactive()
+      @.window().loadURL('http://www.google.com').then =>
+        @.client().waitUntilWindowLoaded().then =>
+          @.client().getTitle().then (title)=>
+            title.assert_Is ''
+            @.client().getHTML('*').then (html)=>
+              html[0].assert_Contains 'Google'
