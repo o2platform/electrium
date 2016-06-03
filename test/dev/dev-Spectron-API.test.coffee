@@ -30,9 +30,8 @@ describe 'Dev Spectron API tests',->
   it 'open Google', ->
     using spectron, ->
       @.window().showInactive()
-      @.window().loadURL('http://www.google.com').then =>
-        @.client().waitUntilWindowLoaded().then =>
+      @.window().loadURL('https://www.google.co.uk').then =>
+        @.client().getHTML('*').then (html)=>
+          html[0].assert_Contains 'Google'
           @.client().getTitle().then (title)=>
-            title.assert_Is ''
-            @.client().getHTML('*').then (html)=>
-              html[0].assert_Contains 'Google'
+            title.assert_Is 'Google'

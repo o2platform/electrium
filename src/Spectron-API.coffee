@@ -19,8 +19,10 @@ class Spectron_API
     @
 
   open: (url)=>
+    #@.window().loadURL(url).then =>
+    #  @.client().waitUntilWindowLoaded()       # this was causing an exceptions on isWindowLoading (so it might be better to add the waitUntilWindowLoaded as a separate method
+
     @.window().loadURL(url).then =>
-      @.client().waitUntilWindowLoaded()
 
   setup: =>
     @.options.path  = @.root_Path.path_Combine 'node_modules/.bin/electron'
